@@ -1,0 +1,50 @@
+<section>
+  <h1>
+    <span class='prefix'>User</span>
+    <%= @user.email %>
+  </h1>
+  
+  <% if @user == current_user %>
+    <table class='virtical'>
+    <tr>
+    <th>E-mail</th>
+    <td><%= @user.email -%></td>
+    </tr>
+    <tr>
+    <th>Last login</th>
+    <td><%= @user.last_sign_in_at -%></td>
+    </tr>
+    </table>
+    <%= link_to 'Edit', edit_user_registration_path, :class => :button %>
+  <% end %>
+
+  <section>
+    <h2>Configurations</h2>
+
+    <div class='configs-list'>
+    <div class='control'>
+    <%= link_to 'Create', new_config_path, class: 'button' %>
+    </div>
+
+    <%=
+      grid(@configs_grid) do |g|
+
+        g.column name: 'Name', attribute: 'name', class: 'column-config-name' do |config|
+          [link_to(config.name, config), {style: 'width:10em; text-align:center'}]
+        end
+
+        g.column name: 'Description', attribute: 'description' do |config|
+          [strip_tags(config.description), {style: 'width:20em; max-width: 20em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
+        end
+
+      end
+    -%>
+
+    <div class='control'>
+    <%= link_to 'Create', new_config_path, class: 'button' %>
+    </div>
+    </div>
+
+  </section>
+
+</section>

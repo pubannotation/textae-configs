@@ -1,0 +1,40 @@
+{
+	"$schema": "http://json-schema.org/schema#",
+	"id": "http://textae-config.pubannotation.org/textae-config.schema.json",
+	"properties": {
+		"entity_types": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {"type": "string"},
+					"color": {"type": "string"},
+					"default": {"type": "boolean"}
+				}
+			}
+		},
+		"relation_types": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {"type": "string"},
+					"color": {"type": "string"},
+					"default": {"type": "boolean"}
+				}
+			}
+		},
+		"delimiter characters": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"Non-edge characters": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		}
+	}
+}

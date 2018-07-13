@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Textae Configuration Repository</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id='canvas'>
+
+<div class="frame">
+<div class="title">
+	<%= link_to image_tag('textae-logo3.png'), configs_path %>
+	<%= link_to 'Configuration Repository', root_path %>
+</div>
+
+<div class="ribbon">
+	<div class="notice"><%= notice %></div>
+	<div id="account" class="menu">
+		<ul>
+			<li><%= render 'devise/menu/registration_items' %></li>
+			<li><%= render 'devise/menu/login_items' %></li>
+		</ul>
+	</div>
+</div>
+</div>
+
+<p class="alert"><%= alert %></p>
+
+<div class="content">
+<%= yield %>
+</div>
+
+</body>
+</html>

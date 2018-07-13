@@ -1,0 +1,31 @@
+<h2>Log in</h2>
+
+<div style="margin:2px"><%= link_to login_with_github.html_safe, omniauth_authorize_path(resource_name, :github) %></div>
+<div style="margin:2px"><%= link_to login_with_google.html_safe, omniauth_authorize_path(resource_name, :google_oauth2) %></div>
+<br/>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<table class='virtical'>
+  <tr>
+    <th><%= f.label :email %></th>
+    <td><%= f.email_field :email, autofocus: true %></td>
+  </tr>
+
+  <tr>
+    <th><%= f.label :password %></th>
+    <td><%= f.password_field :password, autocomplete: "off" %></td>
+  </tr>
+
+  <tr>
+    <th colspan='2'>
+      <% if devise_mapping.rememberable? -%>
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      <% end -%>
+      <%= f.submit "Log in" %>
+    </th>
+  </tr>
+</table>
+<% end %>
+
+<%= render "devise/shared/links" %>

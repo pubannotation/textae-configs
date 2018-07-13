@@ -1,0 +1,30 @@
+<h1>
+Configs
+<%=
+  if current_user
+    link_to 'Create', new_config_path, class: 'button'
+  else
+    link_to 'Login for creation', new_user_session_path, class: 'button'
+  end
+%>
+</h1>
+
+<div class='configs-list'>
+<%=
+  grid(@configs_grid) do |g|
+
+    g.column name: 'Name', attribute: 'name', class: 'column-config-name' do |config|
+      [link_to(config.name, config), {style: 'width:10em; text-align:center'}]
+    end
+
+    g.column name: 'Description', attribute: 'description' do |config|
+      [strip_tags(config.description), {style: 'width:20em; max-width: 20em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
+    end
+
+    g.column name: 'Creator', attribute: 'email', assoc: :user, class: 'column-config-user' do |config|
+      [user(config.user), {style: 'width:15em; text-align:center'}]
+    end
+
+  end
+-%>
+</div>
