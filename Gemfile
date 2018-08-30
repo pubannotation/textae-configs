@@ -50,7 +50,7 @@ group :development do
 end
 
 gem 'therubyracer'
-gem 'devise'
+gem 'devise', github: 'koic/devise', branch: 'fix_syntax_error_for_ruby_2_5_0_preview1'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-github'

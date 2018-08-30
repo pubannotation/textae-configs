@@ -1,6 +1,6 @@
 class ConfigsController < ApplicationController
   before_action :set_config, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :update]
 
   # GET /configs
   # GET /configs.json
@@ -45,6 +45,13 @@ class ConfigsController < ApplicationController
   # PATCH/PUT /configs/name
   # PATCH/PUT /configs/name.json
   def update
+    # ログインしていないときは 401 と headers を返す
+    unless user_signed_in? then
+      response.headers['WWW-Authenticate'] = 'ServerPage'
+      response.headers['Location'] = api_login_url
+      render plain: '', status: 401 and return      
+    end
+
     result = if params.has_key?(:config) && params[:config].present?
       begin
         @config.update(config_params)
@@ -87,6 +94,7 @@ class ConfigsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_config
+      # abort params[:id].inspect
       @config = Config.friendly.find(params[:id])
     end
 

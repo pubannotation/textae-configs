@@ -1,3 +1,15 @@
+GIT
+  remote: git://github.com/koic/devise.git
+  revision: a8a4490808cf5d9c58cb1e18487780ac3ac28286
+  branch: fix_syntax_error_for_ruby_2_5_0_preview1
+  specs:
+    devise (4.3.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 5.2)
+      responders
+      warden (~> 1.2.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -36,8 +48,8 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.4)
-    bcrypt (3.1.11)
-    binding_of_caller (0.7.2)
+    bcrypt (3.1.12)
+    binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
     builder (3.2.3)
     byebug (9.0.6)
@@ -50,12 +62,6 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     debug_inspector (0.0.3)
-    devise (4.3.0)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 5.2)
-      responders
-      warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.7.0)
     faraday (0.11.0)
@@ -201,7 +207,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
-  devise
+  devise!
   font-awesome-rails
   friendly_id (~> 5.1)
   jbuilder (~> 2.0)
@@ -225,4 +231,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.2
+   1.16.4
