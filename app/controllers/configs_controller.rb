@@ -5,7 +5,9 @@ class ConfigsController < ApplicationController
   # GET /configs
   # GET /configs.json
   def index
-    @configs_grid = initialize_grid(Config, include: :user)
+    @configs_grid = initialize_grid(Config.accessibles(current_user),
+      include: :user
+    )
   end
 
   # GET /configs/1
@@ -54,8 +56,10 @@ class ConfigsController < ApplicationController
       end
     elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
       _body = {
+        "autocompletion_ws": params.fetch(:"autocompletion_ws", ""),
         "entity types": params.fetch(:"entity types", []),
         "relation types": params.fetch(:"relation types", []),
+        "attribute types": params.fetch(:"attribute types", []),
         "delimiter characters": params.fetch(:"delimiter characters", []),
         "non-edge characters": params.fetch(:"non-edge characters", [])
       }

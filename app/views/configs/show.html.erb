@@ -8,9 +8,6 @@
 <%= @config.name %>
 </span>
 <%= badge_is_public(@config) %>
-<% if @config.is_public %>
-<span class='tag'><%= fa_icon 'flag', title: 'publicly listed' %></span>
-<% end %>
 <%= link_to 'edit', edit_config_path(@config), class: 'button' if @config.user == current_user %>
 </h1>
 
