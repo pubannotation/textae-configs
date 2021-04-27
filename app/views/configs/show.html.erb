@@ -1,11 +1,19 @@
+<div>
+<%= link_to '< list', configs_path, class: 'button' %>
+</div>
+
 <h1>
-<span class='prefix'>Conf</span>
+<div class='prefix'>Configuration</div>
+<span class='heading'>
 <%= @config.name %>
+</span>
+<%= badge_is_public(@config) %>
 <% if @config.is_public %>
 <span class='tag'><%= fa_icon 'flag', title: 'publicly listed' %></span>
 <% end %>
-<%= link_to 'Edit', edit_config_path(@config), class: 'button' if @config.user == current_user %>
+<%= link_to 'edit', edit_config_path(@config), class: 'button' if @config.user == current_user %>
 </h1>
+
 <div>
 <%=
 	if @config.description
@@ -29,5 +37,3 @@
   </td>
 </tr>
 </table>
-
-<%= link_to 'List', configs_path, class: 'button' %>

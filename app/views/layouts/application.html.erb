@@ -10,23 +10,22 @@
 <div id='canvas'>
 
 <div class="frame">
-<div class="title">
-	<%= link_to image_tag('textae-logo3.png'), configs_path %>
-	<%= link_to 'Configuration Repository', root_path %>
+	<div class="title">
+		<%= link_to image_tag('textae-logo3.png', width: 200), configs_path %>
+		<%= link_to 'Configuration Repository', root_path %>
+	</div>
+
+	<div id="account" class="menu floating-br">
+		<ul>
+			<li><%= render 'devise/menu/registration_items' %> <%= render 'devise/menu/login_items' %></li>
+		</ul>
+	</div>
 </div>
 
 <div class="ribbon">
 	<div class="notice"><%= notice %></div>
-	<div id="account" class="menu">
-		<ul>
-			<li><%= render 'devise/menu/registration_items' %></li>
-			<li><%= render 'devise/menu/login_items' %></li>
-		</ul>
-	</div>
+	<div class="alert"><%= alert %></div>
 </div>
-</div>
-
-<p class="alert"><%= alert %></p>
 
 <div class="content">
 <%= yield %>

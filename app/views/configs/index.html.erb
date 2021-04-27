@@ -1,12 +1,17 @@
 <h1>
-Configs
-<%=
-  if current_user
-    link_to 'Create', new_config_path, class: 'button'
-  else
-    link_to 'Login for creation', new_user_session_path, class: 'button'
-  end
-%>
+	<div class="prefix">
+    configurations
+	</div>
+  <span class="heading">
+		List
+  </span>
+  <%=
+    if current_user
+      link_to 'create', new_config_path, class: 'button'
+    else
+      link_to 'login for creation', new_user_session_path, class: 'button'
+    end
+  %>
 </h1>
 
 <div class='configs-list'>
@@ -18,11 +23,11 @@ Configs
     end
 
     g.column name: 'Description', attribute: 'description' do |config|
-      [strip_tags(config.description), {style: 'width:20em; max-width: 20em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
+      [strip_tags(config.description), {style: 'white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
     end
 
     g.column name: 'Creator', attribute: 'email', assoc: :user, class: 'column-config-user' do |config|
-      [user(config.user), {style: 'width:15em; text-align:center'}]
+      [user(config.user), {style: 'width:16em; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
     end
 
   end

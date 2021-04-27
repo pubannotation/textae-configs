@@ -93,7 +93,7 @@ class ConfigsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def config_params
       _config = params.require(:config).permit(:name, :description, :body, :is_public)
-      _config[:body] = JSON.parse _config[:body]
+      _config[:body] = JSON.parse("{}")
       _config
     end
 
