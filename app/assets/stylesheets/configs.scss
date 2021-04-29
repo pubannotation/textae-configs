@@ -6,27 +6,31 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .wice-grid-title-row {
-  th:last-of-type {
-    width: 1.5em;
-  }
+	th:last-of-type {
+		width: 1.5em;
+	}
 }
 
 .configs-list {
 	table {
-	  table-layout:fixed;
-	  width: 100%;
+		table-layout:fixed;
+		width: 100%;
 
-	  .column-config-name {
-	    width: 10em;
-	  }
+		.column-config-name {
+			width: 10em;
+		}
 
-	  .column-config-description {
-	    max-width: 20em;
-	  }
+		.column-config-description {
+			max-width: 20em;
+		}
 
-	  .column-config-user {
-	    width: 12em;
-	  }
+		.column-config-user {
+			width: 12em;
+		}
+
+		.column-date {
+			width: 12em;
+		}
 	}
 }
 

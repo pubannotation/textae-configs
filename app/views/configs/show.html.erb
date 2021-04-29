@@ -3,34 +3,41 @@
 </div>
 
 <h1>
-<div class='prefix'>Configuration</div>
-<span class='heading'>
-<%= @config.name %>
-</span>
-<%= badge_is_public(@config) %>
-<%= link_to 'edit', edit_config_path(@config), class: 'button' if @config.user == current_user %>
+	<div class='prefix'>
+		Configuration
+	</div>
+	<span class='heading'>
+		<%= @config.name %>
+	</span>
+	<%= badge_is_public(@config) %>
+	<%= link_to 'edit', edit_config_path(@config), class: 'button' if @config.user == current_user %>
 </h1>
 
 <div>
-<%=
-	if @config.description
-		@config.description
-	else
-		'description empty'
-	end
-%>
+	<%=
+		if @config.description
+			@config.description
+		else
+			'description empty'
+		end
+	%>
 </div>
 
 <table class="virtical wide">
-<tr>
-	<th>Creator</th>
-	<td><%= user(@config.user) %></td>
-</tr>
+	<tr>
+		<th>Creator</th>
+		<td><%= user(@config.user) %></td>
+	</tr>
 
-<tr>
-  <th>Body</th>
-  <td>
-<pre><%= JSON.pretty_generate(@config.body) %></pre>
-  </td>
-</tr>
+	<tr>
+		<th>Updated at</th>
+		<td><%= @config.updated_at %></td>
+	</tr>
+
+	<tr>
+		<th>Body</th>
+		<td>
+	<pre><%= JSON.pretty_generate(@config.body) %></pre>
+		</td>
+	</tr>
 </table>
