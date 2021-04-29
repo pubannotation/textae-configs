@@ -10,7 +10,7 @@ class Config < ActiveRecord::Base
 
 	scope :accessibles, -> (current_user) {
 		if current_user.present?
-			where("is_public = true OR user_id = #{current_user.id}")
+			where("is_public = ? OR user_id = ?", true, current_user.id)
 		else
 			where(is_public: true)
 		end
