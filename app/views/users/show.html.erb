@@ -28,11 +28,15 @@
 		grid(@configs_grid) do |g|
 
 			g.column name: 'Name', attribute: 'name', class: 'column-config-name' do |config|
-				[link_to(config.name, config) + " " + badge_is_public(config), {style: 'width:10em; text-align:center'}]
+				[link_to(config.name, config) + " " + badge_is_public(config), {style: 'text-align:center'}]
 			end
 
 			g.column name: 'Description', attribute: 'description' do |config|
-				[strip_tags(config.description), {style: 'width:20em; max-width: 20em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
+				[strip_tags(config.description), {style: 'white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
+			end
+
+			g.column name: 'Updated at', attribute: 'updated_at', class: 'column-date' do |config|
+				config.updated_at
 			end
 
 		end
