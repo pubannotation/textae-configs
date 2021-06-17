@@ -4,9 +4,8 @@ class Config < ActiveRecord::Base
 	include FriendlyId
 	friendly_id :name
 
-	serialize :body, JSON
-
 	validates_format_of :name, :with => /\A[a-z0-9\-_]+\z/i
+	validates :body, presence: true
 
 	scope :accessibles, -> (current_user) {
 		if current_user.present?

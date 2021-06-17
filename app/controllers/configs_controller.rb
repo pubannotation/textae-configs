@@ -31,10 +31,10 @@ class ConfigsController < ApplicationController
 	# POST /configs
 	# POST /configs.json
 	def create
-		@config = current_user.configs.new(config_params)
+		@config = current_user.configs.new(get_config)
 
 		respond_to do |format|
-			if @config.save
+			if @config && @config.save
 				format.html { redirect_to @config, notice: 'Config was successfully created.' }
 				format.json { render :show, status: :created, location: @config }
 			else
@@ -47,24 +47,16 @@ class ConfigsController < ApplicationController
 	# PATCH/PUT /configs/name
 	# PATCH/PUT /configs/name.json
 	def update
-		result = if params.has_key?(:config) && params[:config].present?
-			begin
-				@config.update(config_params)
-			rescue
-				flash[:notice] = 'body was not a valid JSON.'
+		begin
+			result = if params.has_key?(:config) && params[:config].present?
+				@config.update(get_config)
+			elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
+				@config.update(body: get_body)
+			else
 				nil
 			end
-		elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
-			_body = {
-				"autocompletion_ws": params.fetch(:"autocompletion_ws", ""),
-				"entity types": params.fetch(:"entity types", []),
-				"relation types": params.fetch(:"relation types", []),
-				"attribute types": params.fetch(:"attribute types", []),
-				"delimiter characters": params.fetch(:"delimiter characters", []),
-				"non-edge characters": params.fetch(:"non-edge characters", [])
-			}
-			_body.keep_if{|k, v| v.present?}
-			@config.update(body: _body)
+		rescue => e
+			flash.now[:notice] = e.message
 		end
 
 		respond_to do |format|
@@ -89,19 +81,42 @@ class ConfigsController < ApplicationController
 	end
 
 	private
-		# Use callbacks to share common setup or constraints between actions.
 		def set_config
 			@config = Config.friendly.find(params[:id])
 		end
 
-		# Never trust parameters from the scary internet, only allow the white list through.
-		def config_params
-			_config = params.require(:config).permit(:name, :description, :body, :is_public)
-			_config[:body] = JSON.parse("{}")
-			_config
+		def get_body
+			body_obj = if params.has_key?(:config) && params[:config].present?
+				_config = params.require(:config).permit(:name, :description, :body, :is_public)
+				if _config[:body].present?
+					begin
+						JSON.parse _config[:body]
+					rescue => e
+						flash.now[:notice] = e.message
+						nil
+					end
+				else
+					{}
+				end
+			elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
+				{
+					"autocompletion_ws": params.fetch(:"autocompletion_ws", ""),
+					"entity types": params.fetch(:"entity types", []),
+					"relation types": params.fetch(:"relation types", []),
+					"attribute types": params.fetch(:"attribute types", []),
+					"delimiter characters": params.fetch(:"delimiter characters", []),
+					"non-edge characters": params.fetch(:"non-edge characters", [])
+				}.keep_if{|k, v| v.present?}
+			else
+				nil
+			end
+
+			body_obj.nil? ? nil : JSON.pretty_generate(body_obj)
 		end
 
-		def config_body_params
-			params.require(:"entity types")
+		def get_config
+			_config = params.require(:config).permit(:name, :description, :body, :is_public)
+			_config[:body] = get_body
+			_config
 		end
 end
