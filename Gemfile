@@ -56,4 +56,4 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-github'
 
-gem 'rack-cors', '~> 0.4.1'
+gem 'rack-cors', '~> 1.0.6'
