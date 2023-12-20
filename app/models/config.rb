@@ -1,5 +1,5 @@
-class Config < ActiveRecord::Base
-	belongs_to :user
+class Config < ApplicationRecord
+	belongs_to :user, optional: true
 
 	include FriendlyId
 	friendly_id :name
