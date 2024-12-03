@@ -1,9 +1,10 @@
 class Api::V1::ConfigsController < ApplicationController
-  before_action :set_config, only: :update
+  before_action :set_config, only: %i[update destroy]
 
   rescue_from StandardError, with: :handle_standard_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   rescue_from ActiveRecord::RecordNotUnique, with: :record_not_unique
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :parse_error
 
   # POST /configs
@@ -23,6 +24,13 @@ class Api::V1::ConfigsController < ApplicationController
 
     render json: { message: "Config #{@config.name} was successfully updated." }, status: :ok
   end
+
+  # DELETE /configs/name
+	def destroy
+    @config.destroy
+
+    render json: { message: "Config #{@config.name} was successfully deleted." }, status: :ok
+	end
 
   private
 
@@ -70,6 +78,10 @@ class Api::V1::ConfigsController < ApplicationController
 
   def record_not_unique(e)
     render json: { error: 'Config name has already been taken.' }, status: :conflict
+  end
+
+  def record_not_found
+    render json: { error: "Could not find the config #{params[:id]}" }, status: :not_found
   end
 
   def parse_error(e)
