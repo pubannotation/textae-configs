@@ -57,7 +57,7 @@ class Api::V1::ConfigsController < ApplicationController
     body_obj =
       if params.has_key?(:config) && params[:config].present?
         if config[:body].present?
-          config[:body]
+          config[:body].to_h
         else
           {}
         end
@@ -74,7 +74,7 @@ class Api::V1::ConfigsController < ApplicationController
         nil
       end
 
-      body_obj.nil? ? nil : JSON.pretty_generate(body_obj)
+    body_obj.nil? ? nil : JSON.pretty_generate(body_obj)
   end
 
   def handle_standard_error(e)
