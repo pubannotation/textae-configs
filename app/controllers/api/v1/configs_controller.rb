@@ -1,4 +1,5 @@
 class Api::V1::ConfigsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_config, only: %i[show update destroy]
 
   rescue_from StandardError, with: :handle_standard_error
