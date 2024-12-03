@@ -1,5 +1,5 @@
 class Api::V1::ConfigsController < ApplicationController
-  before_action :set_config, only: %i[update destroy]
+  before_action :set_config, only: %i[show update destroy]
 
   rescue_from StandardError, with: :handle_standard_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
@@ -7,11 +7,19 @@ class Api::V1::ConfigsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :parse_error
 
+  # GET /configs/name
+  def show
+    render json: @config.body, status: :ok
+  end
+
   # POST /configs
   def create
     config = current_user.configs.create!(get_config)
 
-    render json: { message: "Config #{config.name} was successfully created." }, status: :created
+    render json: {
+      message: "Config #{config.name} was successfully created.",
+      show_instruction: "If you want to see the saved body, send a GET request to /api/v1/configs/#{config.name}."
+      }, status: :created
   end
 
   # PATCH/PUT /configs/name
