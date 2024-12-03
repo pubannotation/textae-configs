@@ -1,4 +1,5 @@
 class Api::V1::ConfigsController < ApplicationController
+  before_action :set_config, only: :update
 
   rescue_from StandardError, with: :handle_standard_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
@@ -12,7 +13,22 @@ class Api::V1::ConfigsController < ApplicationController
     render json: { message: "Config #{config.name} was successfully created." }, status: :created
   end
 
+  # PATCH/PUT /configs/name
+  def update
+    if params.has_key?(:config) && params[:config].present?
+      @config.update!(get_config)
+    elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
+      @config.update!(body: get_body)
+    end
+
+    render json: { message: "Config #{@config.name} was successfully updated." }, status: :ok
+  end
+
   private
+
+  def set_config
+    @config = current_user.configs.friendly.find(params[:id])
+  end
 
   def get_config
     config = params.require(:config).permit(:name, :description, :body, :is_public)
