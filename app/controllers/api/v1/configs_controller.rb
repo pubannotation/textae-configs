@@ -19,7 +19,7 @@ class Api::V1::ConfigsController < ApplicationController
 
     render json: {
       message: "Config #{config.name} was successfully created.",
-      show_instruction: "If you want to see the saved body, send a GET request to /api/v1/configs/#{config.name}."
+      show_instruction: "If you want to see the saved body, send a GET request to /api/v1/configs/#{config.name}"
       }, status: :created
   end
 
@@ -86,7 +86,7 @@ class Api::V1::ConfigsController < ApplicationController
   end
 
   def record_not_unique(e)
-    render json: { error: 'Config name has already been taken.' }, status: :conflict
+    render json: { error: "#{params[:config][:name]} has already been taken." }, status: :conflict
   end
 
   def record_not_found
@@ -94,7 +94,7 @@ class Api::V1::ConfigsController < ApplicationController
   end
 
   def parse_error(e)
-    render json: { error: 'Invalid JSON format', details: e.message }, status: :bad_request
+    render json: { error: 'Invalid JSON format.' }, status: :bad_request
   end
 
 end
