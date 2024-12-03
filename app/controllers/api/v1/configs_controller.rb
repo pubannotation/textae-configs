@@ -48,7 +48,7 @@ class Api::V1::ConfigsController < ApplicationController
   end
 
   def get_config
-    config = params.require(:config).permit(:name, :description, :body, :is_public)
+    config = params.require(:config).permit(:name, :description, :is_public, body: {})
     config[:body] = get_body(config)
     config
   end
@@ -57,7 +57,7 @@ class Api::V1::ConfigsController < ApplicationController
     body_obj =
       if params.has_key?(:config) && params[:config].present?
         if config[:body].present?
-          JSON.parse config[:body]
+          config[:body]
         else
           {}
         end
