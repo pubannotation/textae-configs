@@ -8,12 +8,12 @@ class Api::V1::ConfigsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :parse_error
 
-  # GET /configs/name
+  # GET api/v1/configs/name
   def show
     render json: @config.body, status: :ok
   end
 
-  # POST /configs
+  # POST api/v1/configs
   def create
     config = current_user.configs.create!(get_config)
 
@@ -23,7 +23,7 @@ class Api::V1::ConfigsController < ApplicationController
       }, status: :created
   end
 
-  # PATCH/PUT /configs/name
+  # PATCH/PUT api/v1/configs/name
   def update
     if params.has_key?(:config) && params[:config].present?
       @config.update!(get_config)
@@ -34,7 +34,7 @@ class Api::V1::ConfigsController < ApplicationController
     render json: { message: "Config #{@config.name} was successfully updated." }, status: :ok
   end
 
-  # DELETE /configs/name
+  # DELETE api/v1/configs/name
 	def destroy
     @config.destroy
 
