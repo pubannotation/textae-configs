@@ -1,5 +1,6 @@
 class User < ApplicationRecord
 	has_many :configs, dependent: :destroy
+	has_one :access_token, dependent: :destroy
 
 	include FriendlyId
 	friendly_id :email
