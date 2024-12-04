@@ -46,7 +46,6 @@ class Api::V1::ConfigsController < ApplicationController
   private
 
   def current_config
-    current_user = User.first
     current_user.configs.friendly.find(params[:name])
   end
 
