@@ -1,5 +1,6 @@
 class Api::V1::ConfigsController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :authenticate_access_token, only: %i[create update destroy]
 
   rescue_from StandardError, with: :handle_standard_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
@@ -40,6 +41,33 @@ class Api::V1::ConfigsController < ApplicationController
   end
 
   private
+
+  def authenticate_access_token
+    if token
+      sign_in(token.user)
+    else
+      render_token_invalid_error
+    end
+  end
+
+  def token
+    bearer_token = bearer_token_in(request.headers)
+    AccessToken.find_by(token: bearer_token) if bearer_token
+  end
+
+  def bearer_token_in(headers)
+    case headers['Authorization']
+    in /^Bearer (.+)$/
+      Regexp.last_match(1)
+    else
+      nil
+    end
+  end
+
+  def render_token_invalid_error
+    render json: { error: "The access token is missing or invalid." }, status: :unauthorized
+    response.headers['WWW-Authenticate'] = 'Bearer'
+  end
 
   def current_config
     current_user.configs.friendly.find(params[:name])
