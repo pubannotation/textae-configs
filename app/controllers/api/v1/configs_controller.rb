@@ -9,7 +9,7 @@ class Api::V1::ConfigsController < ApplicationController
 
   # GET api/v1/configs/name
   def show
-    config = Config.friendly.find(params[:id])
+    config = Config.friendly.find(params[:name])
 
     render json: config.body, status: :ok
   end
@@ -33,20 +33,21 @@ class Api::V1::ConfigsController < ApplicationController
       current_config.update!(body: get_body)
     end
 
-    render json: { message: "Config #{params[:id]} was successfully updated." }, status: :ok
+    render json: { message: "Config #{params[:name]} was successfully updated." }, status: :ok
   end
 
   # DELETE api/v1/configs/name
   def destroy
     current_config.destroy
 
-    render json: { message: "Config #{params[:id]} was successfully deleted." }, status: :ok
+    render json: { message: "Config #{params[:name]} was successfully deleted." }, status: :ok
   end
 
   private
 
   def current_config
-    current_user.configs.friendly.find(params[:id])
+    current_user = User.first
+    current_user.configs.friendly.find(params[:name])
   end
 
   def get_config
@@ -92,7 +93,7 @@ class Api::V1::ConfigsController < ApplicationController
   end
 
   def record_not_found
-    render json: { error: "Could not find the config #{params[:id]}" }, status: :not_found
+    render json: { error: "Could not find the config #{params[:name]}" }, status: :not_found
   end
 
   def parse_error(e)
