@@ -1,6 +1,6 @@
 class Api::V1::ConfigsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_config, only: %i[show update destroy]
+  before_action :set_config, only: %i[update destroy]
 
   rescue_from StandardError, with: :handle_standard_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
@@ -10,7 +10,9 @@ class Api::V1::ConfigsController < ApplicationController
 
   # GET api/v1/configs/name
   def show
-    render json: @config.body, status: :ok
+    config = Config.friendly.find(params[:id])
+
+    render json: config.body, status: :ok
   end
 
   # POST api/v1/configs
