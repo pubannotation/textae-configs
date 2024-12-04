@@ -1,6 +1,6 @@
 class Api::V1::ConfigsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_config, only: %i[update destroy]
+  before_action :set_current_config, only: %i[update destroy]
 
   rescue_from StandardError, with: :handle_standard_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
@@ -29,25 +29,25 @@ class Api::V1::ConfigsController < ApplicationController
   # PATCH/PUT api/v1/configs/name
   def update
     if params.has_key?(:config) && params[:config].present?
-      @config.update!(get_config)
+      @current_config.update!(get_config)
     elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
-      @config.update!(body: get_body)
+      @current_config.update!(body: get_body)
     end
 
-    render json: { message: "Config #{@config.name} was successfully updated." }, status: :ok
+    render json: { message: "Config #{@current_config.name} was successfully updated." }, status: :ok
   end
 
   # DELETE api/v1/configs/name
   def destroy
-    @config.destroy
+    @current_config.destroy
 
-    render json: { message: "Config #{@config.name} was successfully deleted." }, status: :ok
+    render json: { message: "Config #{@current_config.name} was successfully deleted." }, status: :ok
   end
 
   private
 
-  def set_config
-    @config = current_user.configs.friendly.find(params[:id])
+  def set_current_config
+    @current_config = current_user.configs.friendly.find(params[:id])
   end
 
   def get_config
