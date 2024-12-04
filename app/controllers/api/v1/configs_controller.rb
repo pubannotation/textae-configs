@@ -37,11 +37,11 @@ class Api::V1::ConfigsController < ApplicationController
   end
 
   # DELETE api/v1/configs/name
-	def destroy
+  def destroy
     @config.destroy
 
     render json: { message: "Config #{@config.name} was successfully deleted." }, status: :ok
-	end
+  end
 
   private
 
