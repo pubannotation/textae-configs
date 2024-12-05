@@ -10,8 +10,9 @@ class Api::V1::ConfigsController < ApplicationController
   # GET api/v1/configs/name
   def show
     config = Config.friendly.find(params[:name])
+    parsed_body = JSON.parse(config.body)
 
-    render json: config.body, status: :ok
+    render json: JSON.pretty_generate(parsed_body), status: :ok
   end
 
   # POST api/v1/configs/name
@@ -57,9 +58,7 @@ class Api::V1::ConfigsController < ApplicationController
 
   def get_body
     raw_body = JSON.parse(request.raw_post)
-    filtered_body = filter_body(raw_body)
-
-    JSON.pretty_generate(filtered_body)
+    filter_body(raw_body)
   end
 
   def filter_body(target)

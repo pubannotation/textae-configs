@@ -1,6 +1,8 @@
 class Config < ApplicationRecord
 	belongs_to :user, optional: true
 
+	before_save :generate_json_body
+
 	include FriendlyId
 	friendly_id :name
 
@@ -15,4 +17,12 @@ class Config < ApplicationRecord
 		end
 	}
 
+	private
+
+	def generate_json_body
+		# body is saved in ruby format through controller.
+		# To save as JSON, convert format using gsub.
+		parsed_body = JSON.parse(body.gsub('=>', ':'))
+		self.body = JSON.generate(parsed_body)
+	end
 end

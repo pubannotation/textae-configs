@@ -13,9 +13,12 @@ class ConfigsController < ApplicationController
 	# GET /configs/1
 	# GET /configs/1.json
 	def show
+		parsed_body = JSON.parse(@config.body)
+		@formatted_body = JSON.pretty_generate(parsed_body)
+
 		respond_to do |format|
 			format.html
-			format.json { render json: @config.body }
+			format.json { render json: @formatted_body }
 		end
 	end
 
@@ -86,7 +89,7 @@ class ConfigsController < ApplicationController
 		end
 
 		def get_body
-			body_obj = if params.has_key?(:config) && params[:config].present?
+			if params.has_key?(:config) && params[:config].present?
 				_config = params.require(:config).permit(:name, :description, :body, :is_public)
 				if _config[:body].present?
 					begin
@@ -110,8 +113,6 @@ class ConfigsController < ApplicationController
 			else
 				nil
 			end
-
-			body_obj.nil? ? nil : JSON.pretty_generate(body_obj)
 		end
 
 		def get_config
