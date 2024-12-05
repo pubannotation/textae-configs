@@ -27,11 +27,7 @@ class Api::V1::ConfigsController < ApplicationController
 
   # PATCH/PUT api/v1/configs/name
   def update
-    if params.has_key?(:config) && params[:config].present?
-      current_config.update!(get_config)
-    elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
-      current_config.update!(body: get_body)
-    end
+    current_config.update!(get_config)
 
     render json: { message: "Config #{params[:name]} was successfully updated." }, status: :ok
   end
@@ -50,20 +46,18 @@ class Api::V1::ConfigsController < ApplicationController
   end
 
   def get_config
-    config = params.require(:config).permit(:name, :description, :is_public, body: {})
-    config[:body] = get_body(config)
+    config = {}
+    config[:name] = params[:name]
+    config[:body] = get_body(config) if request.raw_post.present?
+    config[:description] = params[:description] if params[:description]
+    config[:is_public] = params[:is_public] if params[:is_public]
+
     config
   end
 
   def get_body(config)
     body_obj =
-      if params.has_key?(:config) && params[:config].present?
-        if config[:body].present?
-          config[:body].to_h
-        else
-          {}
-        end
-      elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
+      if params.has_key?(:"entity types") || params.has_key?(:"relation types")
         {
           "autocompletion_ws": params.fetch(:"autocompletion_ws", ""),
           "entity types": params.fetch(:"entity types", []),
@@ -73,10 +67,10 @@ class Api::V1::ConfigsController < ApplicationController
           "non-edge characters": params.fetch(:"non-edge characters", [])
         }.keep_if{|k, v| v.present?}
       else
-        nil
+        JSON.parse(request.raw_post)
       end
 
-    body_obj.nil? ? nil : JSON.pretty_generate(body_obj)
+    JSON.pretty_generate(body_obj)
   end
 
   def handle_standard_error(e)
