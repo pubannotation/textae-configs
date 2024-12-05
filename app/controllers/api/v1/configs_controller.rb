@@ -58,18 +58,7 @@ class Api::V1::ConfigsController < ApplicationController
 
   def get_body
     raw_body = JSON.parse(request.raw_post)
-    filter_body(raw_body)
-  end
-
-  def filter_body(target)
-    target.slice(
-      "autocompletion_ws",
-      "entity types",
-      "relation types",
-      "attribute types",
-      "delimiter characters",
-      "non-edge characters"
-    ).transform_values(&:presence).compact
+    Config.filter_body(raw_body)
   end
 
   def handle_standard_error(e)

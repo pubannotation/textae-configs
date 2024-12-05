@@ -17,6 +17,17 @@ class Config < ApplicationRecord
 		end
 	}
 
+	def self.filter_body(target)
+		target.slice(
+			"autocompletion_ws",
+			"entity types",
+			"relation types",
+			"attribute types",
+			"delimiter characters",
+			"non-edge characters"
+		).transform_values(&:presence).compact
+	end
+
 	private
 
 	def generate_json_body
