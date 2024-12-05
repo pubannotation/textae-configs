@@ -56,21 +56,27 @@ class Api::V1::ConfigsController < ApplicationController
   end
 
   def get_body
+    raw_body = JSON.parse(request.raw_post)
+
     body_obj =
       if params.has_key?(:"entity types") || params.has_key?(:"relation types")
-        {
-          "autocompletion_ws": params.fetch(:"autocompletion_ws", ""),
-          "entity types": params.fetch(:"entity types", []),
-          "relation types": params.fetch(:"relation types", []),
-          "attribute types": params.fetch(:"attribute types", []),
-          "delimiter characters": params.fetch(:"delimiter characters", []),
-          "non-edge characters": params.fetch(:"non-edge characters", [])
-        }.keep_if{|k, v| v.present?}
+        filter_body(raw_body)
       else
-        JSON.parse(request.raw_post)
+        raw_body
       end
 
     JSON.pretty_generate(body_obj)
+  end
+
+  def filter_body(target)
+    target.slice(
+      "autocompletion_ws",
+      "entity types",
+      "relation types",
+      "attribute types",
+      "delimiter characters",
+      "non-edge characters"
+    ).transform_values(&:presence).compact
   end
 
   def handle_standard_error(e)
