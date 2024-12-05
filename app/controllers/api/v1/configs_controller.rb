@@ -48,14 +48,14 @@ class Api::V1::ConfigsController < ApplicationController
   def get_config
     config = {}
     config[:name] = params[:name]
-    config[:body] = get_body(config) if request.raw_post.present?
+    config[:body] = get_body if request.raw_post.present?
     config[:description] = params[:description] if params[:description]
     config[:is_public] = params[:is_public] if params[:is_public]
 
     config
   end
 
-  def get_body(config)
+  def get_body
     body_obj =
       if params.has_key?(:"entity types") || params.has_key?(:"relation types")
         {
@@ -89,7 +89,7 @@ class Api::V1::ConfigsController < ApplicationController
     render json: { error: "Could not find the config #{params[:name]}" }, status: :not_found
   end
 
-  def parse_error(e)
+  def parse_error
     render json: { error: 'Invalid JSON format.' }, status: :bad_request
   end
 
