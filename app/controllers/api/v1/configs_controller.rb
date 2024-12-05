@@ -16,7 +16,7 @@ class Api::V1::ConfigsController < ApplicationController
 
   # POST api/v1/configs/name
   def create
-    current_user.configs.create!(get_config)
+    current_user.configs.create!(new_config)
 
     render json: {
              message: "Config #{params[:name]} was successfully created.",
@@ -27,7 +27,7 @@ class Api::V1::ConfigsController < ApplicationController
 
   # PATCH/PUT api/v1/configs/name
   def update
-    current_config.update!(get_config)
+    current_config.update!(new_config)
 
     render json: { message: "Config #{params[:name]} was successfully updated." }, status: :ok
   end
@@ -45,7 +45,7 @@ class Api::V1::ConfigsController < ApplicationController
     current_user.configs.friendly.find(params[:name])
   end
 
-  def get_config
+  def new_config
     config = {}
     config[:name] = params[:name]
     config[:body] = get_body if request.raw_post.present?
