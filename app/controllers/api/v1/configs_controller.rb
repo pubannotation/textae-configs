@@ -14,13 +14,13 @@ class Api::V1::ConfigsController < ApplicationController
     render json: config.body, status: :ok
   end
 
-  # POST api/v1/configs
+  # POST api/v1/configs/name
   def create
-    config = current_user.configs.create!(get_config)
+    current_user.configs.create!(get_config)
 
     render json: {
-             message: "Config #{config.name} was successfully created.",
-             show_instruction: "If you want to see the saved body, send a GET request to /api/v1/configs/#{config.name}"
+             message: "Config #{params[:name]} was successfully created.",
+             show_instruction: "If you want to see the saved body, send a GET request to /api/v1/configs/#{params[:name]}"
            },
            status: :created
   end
@@ -87,8 +87,8 @@ class Api::V1::ConfigsController < ApplicationController
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
-  def record_not_unique(e)
-    render json: { error: "#{params[:config][:name]} has already been taken." }, status: :conflict
+  def record_not_unique
+    render json: { error: "#{params[:name]} has already been taken." }, status: :conflict
   end
 
   def record_not_found
