@@ -1,4 +1,6 @@
 class Api::V1::ConfigsController < ApplicationController
+  include Filterable
+
   skip_before_action :verify_authenticity_token
 
   rescue_from StandardError, with: :handle_standard_error
@@ -59,7 +61,7 @@ class Api::V1::ConfigsController < ApplicationController
     raw_body = JSON.parse(request.raw_post)
 
     body_obj =
-      if params.has_key?(:"entity types") || params.has_key?(:"relation types")
+      if config_filterable?
         filter_body(raw_body)
       else
         raw_body

@@ -1,4 +1,6 @@
 class ConfigsController < ApplicationController
+	include Filterable
+
 	before_action :set_config, only: [:show, :edit, :update, :destroy]
 	before_action :authenticate_user!, except: [:index, :show]
 
@@ -98,7 +100,7 @@ class ConfigsController < ApplicationController
 				else
 					{}
 				end
-			elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
+			elsif config_filterable?
 				{
 					"autocompletion_ws": params.fetch(:"autocompletion_ws", ""),
 					"entity types": params.fetch(:"entity types", []),
