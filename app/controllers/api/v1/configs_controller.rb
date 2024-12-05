@@ -3,7 +3,7 @@ class Api::V1::ConfigsController < ApplicationController
 
   rescue_from StandardError, with: :handle_standard_error
   rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
-  rescue_from ActiveRecord::RecordNotUnique, with: :record_not_unique
+  rescue_from ActiveRecord::RecordNotUnique, with: :record_already_exists
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from ActionDispatch::Http::Parameters::ParseError, with: :parse_error
 
@@ -81,7 +81,7 @@ class Api::V1::ConfigsController < ApplicationController
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
-  def record_not_unique
+  def record_already_exists
     render json: { error: "#{params[:name]} has already been taken." }, status: :conflict
   end
 
