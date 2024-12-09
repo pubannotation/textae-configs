@@ -1,6 +1,4 @@
 class Api::V1::ConfigsController < ApplicationController
-  include Filterable
-
   skip_before_action :verify_authenticity_token
 
   rescue_from StandardError, with: :handle_standard_error
@@ -59,15 +57,9 @@ class Api::V1::ConfigsController < ApplicationController
 
   def get_body
     raw_body = JSON.parse(request.raw_post)
+    filtered_body = filter_body(raw_body)
 
-    body_obj =
-      if config_filterable?
-        filter_body(raw_body)
-      else
-        raw_body
-      end
-
-    JSON.pretty_generate(body_obj)
+    JSON.pretty_generate(filtered_body)
   end
 
   def filter_body(target)
