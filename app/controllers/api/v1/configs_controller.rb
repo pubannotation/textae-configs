@@ -48,7 +48,7 @@ class Api::V1::ConfigsController < ApplicationController
   def new_config
     config = {}
     config[:name] = params[:name]
-    config[:body] = Config.parse_body(request.raw_post) if request.raw_post.present?
+    config[:body] = Config.format_body(request.raw_post) if request.raw_post.present?
     config[:description] = params[:description] if params[:description]
     config[:is_public] = params[:is_public] if params[:is_public]
 
