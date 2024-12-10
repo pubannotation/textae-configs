@@ -28,6 +28,11 @@ class Config < ApplicationRecord
 		).transform_values(&:presence).compact
 	end
 
+	def pretty_body
+		parsed_body = JSON.parse(body)
+		JSON.pretty_generate(parsed_body)
+	end
+
 	private
 
 	def generate_json_body

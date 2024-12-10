@@ -13,8 +13,7 @@ class ConfigsController < ApplicationController
 	# GET /configs/1
 	# GET /configs/1.json
 	def show
-		parsed_body = JSON.parse(@config.body)
-		@formatted_body = JSON.pretty_generate(parsed_body)
+		@formatted_body = @config.pretty_body
 
 		respond_to do |format|
 			format.html
