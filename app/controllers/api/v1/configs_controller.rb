@@ -48,16 +48,11 @@ class Api::V1::ConfigsController < ApplicationController
   def new_config
     config = {}
     config[:name] = params[:name]
-    config[:body] = get_body if request.raw_post.present?
+    config[:body] = Config.parse_body(request.raw_post) if request.raw_post.present?
     config[:description] = params[:description] if params[:description]
     config[:is_public] = params[:is_public] if params[:is_public]
 
     config
-  end
-
-  def get_body
-    raw_body = JSON.parse(request.raw_post)
-    Config.filter_body(raw_body)
   end
 
   def handle_standard_error(e)

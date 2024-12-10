@@ -17,8 +17,10 @@ class Config < ApplicationRecord
 		end
 	}
 
-	def self.filter_body(target)
-		target.slice(
+	def self.parse_body(raw_body)
+		parsed_body = JSON.parse(raw_body)
+
+		parsed_body.slice(
 			"autocompletion_ws",
 			"entity types",
 			"relation types",
