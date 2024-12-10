@@ -15,4 +15,23 @@ class Config < ApplicationRecord
 		end
 	}
 
+	def self.format_body(raw_body)
+		parsed_body = JSON.parse(raw_body)
+
+		filtered_body = parsed_body.slice(
+			"autocompletion_ws",
+			"entity types",
+			"relation types",
+			"attribute types",
+			"delimiter characters",
+			"non-edge characters"
+		).transform_values(&:presence).compact
+
+		JSON.generate(filtered_body)
+	end
+
+	def pretty_body
+		parsed_body = JSON.parse(body)
+		JSON.pretty_generate(parsed_body)
+	end
 end

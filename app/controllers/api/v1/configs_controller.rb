@@ -11,7 +11,7 @@ class Api::V1::ConfigsController < ApplicationController
   def show
     config = Config.friendly.find(params[:name])
 
-    render json: config.body, status: :ok
+    render json: config.pretty_body, status: :ok
   end
 
   # POST api/v1/configs/name
@@ -48,29 +48,11 @@ class Api::V1::ConfigsController < ApplicationController
   def new_config
     config = {}
     config[:name] = params[:name]
-    config[:body] = get_body if request.raw_post.present?
+    config[:body] = Config.format_body(request.raw_post) if request.raw_post.present?
     config[:description] = params[:description] if params[:description]
     config[:is_public] = params[:is_public] if params[:is_public]
 
     config
-  end
-
-  def get_body
-    raw_body = JSON.parse(request.raw_post)
-    filtered_body = filter_body(raw_body)
-
-    JSON.pretty_generate(filtered_body)
-  end
-
-  def filter_body(target)
-    target.slice(
-      "autocompletion_ws",
-      "entity types",
-      "relation types",
-      "attribute types",
-      "delimiter characters",
-      "non-edge characters"
-    ).transform_values(&:presence).compact
   end
 
   def handle_standard_error(e)
