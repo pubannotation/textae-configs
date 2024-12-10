@@ -6,4 +6,12 @@ Rails.application.routes.draw do
 
 	resources :configs
 	root 'configs#index'
+
+	namespace :api do
+		namespace :v1 do
+			resources :configs, param: :name, only: %i[show update destroy] do
+				post '/', to: 'configs#create', on: :member
+			end
+		end
+	end
 end
