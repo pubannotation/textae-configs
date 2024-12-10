@@ -7,7 +7,7 @@ one:
   is_public: false
 
 two:
-  name: MyString
-  description: MyText
-  body: MyText
-  is_public: false
+  name: test-config-1
+  body: '{}'
+  is_public: true
+  user_id: 1
