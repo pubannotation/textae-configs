@@ -88,10 +88,19 @@ class Api::V1::ConfigsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should_return_404_when_config_is_not_found" do
-    get "/api/v1/configs/non-existent-config"
+    expected_message = "Could not find the config non-existent-config"
 
+    get "/api/v1/configs/non-existent-config"
     assert_response 404
-    assert_equal "Could not find the config non-existent-config", JSON.parse(response.body)['error']
+    assert_equal expected_message, JSON.parse(response.body)['error']
+
+    put "/api/v1/configs/non-existent-config", params: '{}', headers: { 'Content-Type': 'application/json' }
+    assert_response 404
+    assert_equal expected_message, JSON.parse(response.body)['error']
+
+    delete "/api/v1/configs/non-existent-config"
+    assert_response 404
+    assert_equal expected_message, JSON.parse(response.body)['error']
   end
 
   test "should_return_409_when_config_is_already_exists" do
