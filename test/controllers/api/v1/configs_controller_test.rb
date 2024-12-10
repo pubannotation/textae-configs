@@ -8,6 +8,7 @@ class Api::V1::ConfigsControllerTest < ActionDispatch::IntegrationTest
     user.create_access_token!
     @access_token = user.access_token.token
     @config = configs(:two)
+    @other_user_config = configs(:three)
   end
 
   # Test POST api/v1/configs/name
@@ -141,5 +142,36 @@ class Api::V1::ConfigsControllerTest < ActionDispatch::IntegrationTest
                                                                    'Authorization' => "Bearer #{@access_token}" }
 
     assert_response 422
+  end
+
+  # Test authentication
+  test "should_not_be_able_to_change_resources_without_access_token" do
+    post "/api/v1/configs/test-config", params: '{ "attribute types": "value" }',
+                                        headers: { 'Content-Type' => 'application/json' }
+    assert_response 401
+
+    put "/api/v1/configs/#{@config.name}", params: '{ "attribute types": "new_value" }',
+                                           headers: { 'Content-Type' => 'application/json' }
+    assert_response 401
+
+    delete "/api/v1/configs/#{@config.name}"
+    assert_response 401
+  end
+
+  test "should_not_be_able_to_change_resources_with_invalid_access_token" do
+    post "/api/v1/configs/test-config", params: '{ "attribute types": "value" }',
+                                        headers: { 'Content-Type' => 'application/json',
+                                                   'Authorization' => "Bearer invalid-token" }
+    assert_response 401
+  end
+
+  test "should_not_be_able_to_change_other_users_resources" do
+    put "/api/v1/configs/#{@config.name}", params: '{ "attribute types": "new_value" }',
+                                           headers: { 'Content-Type' => 'application/json',
+                                                      'Authorization' => "Bearer #{@access_token}" }
+    assert_response 404
+
+    delete "/api/v1/configs/#{@other_user_config.name}", headers: { 'Authorization' => "Bearer #{@access_token}" }
+    assert_response 404
   end
 end

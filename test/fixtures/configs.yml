@@ -11,3 +11,9 @@ two:
   body: '{}'
   is_public: true
   user_id: 1
+
+three:
+  name: test-config-2
+  body: '{}'
+  is_public: true
+  user_id: 2
