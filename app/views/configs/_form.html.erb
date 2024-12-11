@@ -1,36 +1,36 @@
 <%= form_for(@config) do |f| %>
-	<% if @config.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@config.errors.count, "error") %> prohibited this config from being saved:</h2>
+  <% if @config.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@config.errors.count, "error") %> prohibited this config from being saved:</h2>
 
-			<ul>
-			<% @config.errors.full_messages.each do |message| %>
-				<li><%= message %></li>
-			<% end %>
-			</ul>
-		</div>
-	<% end %>
+      <ul>
+      <% @config.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
 <table class='virtical wide'>
-	<tr>
-		<th><%= f.label :name %></th>
-		<td><%= f.text_field :name %></td>
-	</tr>
-	<tr>
-		<th><%= f.label :description %></th>
-		<td><%= f.text_area :description %></td>
-	</tr>
-	<tr>
-		<th><%= f.label :body %></th>
-		<td><%= f.text_area :body %></td>
-		<!-- <td><div id='config_body'></div></td> -->
-	</tr>
-	<tr>
-		<th><%= f.label :is_public %></th>
-		<td><%= f.check_box :is_public %></td>
-	</tr>
+  <tr>
+    <th><%= f.label :name %></th>
+    <td><%= f.text_field :name %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :description %></th>
+    <td><%= f.text_area :description %></td>
+  </tr>
+  <tr>
+    <th><%= f.label :body %></th>
+    <td><%= f.text_area :body %></td>
+    <!-- <td><div id='config_body'></div></td> -->
+  </tr>
+  <tr>
+    <th><%= f.label :is_public %></th>
+    <td><%= f.check_box :is_public %></td>
+  </tr>
 </table>
 <div class="actions">
-	<%= f.submit %>
+  <%= f.submit %>
 </div>
 <% end %>

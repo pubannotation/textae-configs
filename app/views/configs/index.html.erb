@@ -1,39 +1,39 @@
 <h1>
-	<div class="prefix">
-		configurations
-	</div>
-	<span class="heading">
-		List
-	</span>
-	<%=
-		if current_user
-			link_to 'create', new_config_path, class: 'button'
-		else
-			link_to 'login for creation', new_user_session_path, class: 'button'
-		end
-	%>
+  <div class="prefix">
+    configurations
+  </div>
+  <span class="heading">
+    List
+  </span>
+  <%=
+    if current_user
+      link_to 'create', new_config_path, class: 'button'
+    else
+      link_to 'login for creation', new_user_session_path, class: 'button'
+    end
+  %>
 </h1>
 
 <div class='configs-list'>
 <%=
-	grid(@configs_grid) do |g|
+  grid(@configs_grid) do |g|
 
-		g.column name: 'Name', attribute: 'name', class: 'column-config-name' do |config|
-			[link_to(config.name, config), {style: 'text-align:center'}]
-		end
+    g.column name: 'Name', attribute: 'name', class: 'column-config-name' do |config|
+      [link_to(config.name, config), {style: 'text-align:center'}]
+    end
 
-		g.column name: 'Description', attribute: 'description' do |config|
-			[strip_tags(config.description), {style: 'white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
-		end
+    g.column name: 'Description', attribute: 'description' do |config|
+      [strip_tags(config.description), {style: 'white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
+    end
 
-		g.column name: 'Updated at', attribute: 'updated_at', class: 'column-date' do |config|
-			config.updated_at
-		end
+    g.column name: 'Updated at', attribute: 'updated_at', class: 'column-date' do |config|
+      config.updated_at
+    end
 
-		g.column name: 'Creator', attribute: 'email', assoc: :user, class: 'column-config-user' do |config|
-			[user(config.user), {style: 'text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
-		end
+    g.column name: 'Creator', attribute: 'email', assoc: :user, class: 'column-config-user' do |config|
+      [user(config.user), {style: 'text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
+    end
 
-	end
+  end
 -%>
 </div>
