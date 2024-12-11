@@ -1,0 +1,26 @@
+.access-token-submit {
+  font-weight: bold;
+}
+
+.access-token-submit:hover {
+  color: #99dd77;
+}
+
+.access-token-submit-disabled {
+  display: inline-block;
+  padding: 2px 12px;
+
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  box-shadow: inset 0px 1px 0px 0px #f0f0f0;
+  background: linear-gradient(to bottom, #f6f6f6 5%, #eaeaea 100%);
+  background-color: #f6f6f6;
+
+  color: #a0a0a0;
+  font-family: arial;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffffff;
+  cursor: pointer;
+  opacity: 0.7;
+}
