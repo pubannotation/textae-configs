@@ -1,5 +1,5 @@
-# BooleanValidator prevents Rails type conversion from storing the true/false value as an unexpected value
-# when it is received as a string.
+# BooleanValidator prevents unexpected Rails type conversion.
+# For example, it prevents the value like ‘foo’ or ‘bar’ from being saved as true.
 
 class BooleanValidator < ActiveModel::EachValidator
   VALID_VALUES = [
