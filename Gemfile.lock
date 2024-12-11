@@ -1,12 +1,11 @@
 GIT
-  remote: https://github.com/ledsun/wice_grid.git
-  revision: c9f4f9ccdbcd1aa26e6d5867a339b4ab7cd1f36c
-  branch: rails_7
+  remote: https://github.com/yush-nh/wice_grid.git
+  revision: f2999ab4d90c1f669d32ffae4de229813051c907
   specs:
-    wice_grid (4.1.0)
-      coffee-rails (> 3.2)
-      kaminari (~> 1.1)
-      rails (>= 5.0)
+    wice_grid (7.1.4)
+      jquery-rails
+      kaminari
+      rails (>= 7.0)
 
 GEM
   remote: https://rubygems.org/
