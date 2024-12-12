@@ -1,78 +1,78 @@
 <h1>
-	<div class='prefix'>User</div>
-	<span class='heading'><%= @user.email %></span>
-	<%= link_to 'edit', edit_user_registration_path, :class => :button %>
+  <div class='prefix'>User</div>
+  <span class='heading'><%= @user.email %></span>
+  <%= link_to 'edit', edit_user_registration_path, :class => :button %>
 </h1>
 
 <% if @user == current_user %>
-	<table class='virtical'>
-	<tr>
-	<th>E-mail</th>
-	<td><%= @user.email -%></td>
-	</tr>
-	<tr>
-	<th>Last login</th>
-	<td><%= @user.last_sign_in_at -%></td>
-	</tr>
-	</table>
+  <table class='virtical'>
+  <tr>
+  <th>E-mail</th>
+  <td><%= @user.email -%></td>
+  </tr>
+  <tr>
+  <th>Last login</th>
+  <td><%= @user.last_sign_in_at -%></td>
+  </tr>
+  </table>
 <% end %>
 
 <section>
-	<h2>
-		<span class="heading">Configurations</span>
-		<%= link_to 'create', new_config_path, class: 'button' %>
-	</h2>
+  <h2>
+    <span class="heading">Configurations</span>
+    <%= link_to 'create', new_config_path, class: 'button' %>
+  </h2>
 
-	<div class='configs-list'>
-	<%=
-		grid(@configs_grid) do |g|
+  <div class='configs-list'>
+  <%=
+    grid(@configs_grid) do |g|
 
-			g.column name: 'Name', attribute: 'name', class: 'column-config-name' do |config|
-				[link_to(config.name, config) + " " + badge_is_public(config), {style: 'text-align:center'}]
-			end
+      g.column name: 'Name', attribute: 'name', class: 'column-config-name' do |config|
+        [link_to(config.name, config) + " " + badge_is_public(config), {style: 'text-align:center'}]
+      end
 
-			g.column name: 'Description', attribute: 'description' do |config|
-				[strip_tags(config.description), {style: 'white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
-			end
+      g.column name: 'Description', attribute: 'description' do |config|
+        [strip_tags(config.description), {style: 'white-space:nowrap; overflow:hidden; text-overflow:ellipsis'}]
+      end
 
-			g.column name: 'Updated at', attribute: 'updated_at', class: 'column-date' do |config|
-				config.updated_at
-			end
+      g.column name: 'Updated at', attribute: 'updated_at', class: 'column-date' do |config|
+        config.updated_at
+      end
 
-		end
-	-%>
+    end
+  -%>
 
-	</div>
+  </div>
 
 </section>
 
 <% if @user == current_user %>
-	<section>
-		<h2>
-			<span class="heading">Access Tokens</span>
-			<% if @user.access_token.present? %>
-				<button class='access-token-submit-disabled' disabled>create</button>
-			<% else %>
-				<%= form_with url: access_tokens_path, method: :post, html: { style: 'display: inline-block;' } do |form| %>
-					<%= form.submit 'create', class: 'button access-token-submit' %>
-				<% end %>
-			<% end %>
-		</h2>
+  <section>
+    <h2>
+      <span class="heading">Access Tokens</span>
+      <% if @user.access_token.present? %>
+        <button class='access-token-submit-disabled' disabled>create</button>
+      <% else %>
+        <%= form_with url: access_tokens_path, method: :post, html: { style: 'display: inline-block;' } do |form| %>
+          <%= form.submit 'create', class: 'button access-token-submit' %>
+        <% end %>
+      <% end %>
+    </h2>
 
-		<% if @user.access_token.present? %>
-			<table>
-				<tr>
-					<th>Access Token</th>
-					<td id="access-token" style="font-weight: small"><%= @user.access_token.token %></td>
-					<td><button id="clipboard-btn" style="cursor: pointer" data-clipboard-target="#access-token"><%= fa_icon('copy') %></button></td>
-					<td><%= link_to fa_icon('trash'), access_token_path(@user.access_token), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-				</tr>
-			</table>
-		<% end %>
-		</div>
-	</section>
+    <% if @user.access_token.present? %>
+      <table>
+        <tr>
+          <th>Access Token</th>
+          <td id="access-token" style="font-weight: small"><%= @user.access_token.token %></td>
+          <td><button id="clipboard-btn" style="cursor: pointer" data-clipboard-target="#access-token"><%= fa_icon('copy') %></button></td>
+          <td><%= link_to fa_icon('trash'), access_token_path(@user.access_token), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      </table>
+    <% end %>
+    </div>
+  </section>
 <% end %>
 
 <script>
-	new ClipboardJS('#clipboard-btn')
+  new ClipboardJS('#clipboard-btn')
 </script>

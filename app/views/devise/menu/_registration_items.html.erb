@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-	Welcome <%= link_to current_user.email, user_path(current_user) %>
+  Welcome <%= link_to current_user.email, user_path(current_user) %>
 <% else %>
-	<%= link_to '[signup]', new_user_registration_path, :class => 'capitalize_first' %>
+  <%= link_to '[signup]', new_user_registration_path, :class => 'capitalize_first' %>
 <% end %>
