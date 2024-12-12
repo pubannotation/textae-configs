@@ -88,30 +88,33 @@ class ConfigsController < ApplicationController
     end
 
     def get_body
-      if params.has_key?(:config) && params[:config].present?
-        _config = params.require(:config).permit(:name, :description, :body, :is_public)
-        if _config[:body].present?
-          begin
-            JSON.parse _config[:body]
-          rescue => e
-            flash.now[:notice] = e.message
-            nil
+      body_obj =
+        if params.has_key?(:config) && params[:config].present?
+          _config = params.require(:config).permit(:name, :description, :body, :is_public)
+          if _config[:body].present?
+            begin
+              JSON.parse _config[:body]
+            rescue => e
+              flash.now[:notice] = e.message
+              nil
+            end
+          else
+            {}
           end
+        elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
+          {
+            "autocompletion_ws": params.fetch(:"autocompletion_ws", ""),
+            "entity types": params.fetch(:"entity types", []),
+            "relation types": params.fetch(:"relation types", []),
+            "attribute types": params.fetch(:"attribute types", []),
+            "delimiter characters": params.fetch(:"delimiter characters", []),
+            "non-edge characters": params.fetch(:"non-edge characters", [])
+          }.keep_if{|k, v| v.present?}
         else
-          {}
+          nil
         end
-      elsif params.has_key?(:"entity types") || params.has_key?(:"relation types")
-        {
-          "autocompletion_ws": params.fetch(:"autocompletion_ws", ""),
-          "entity types": params.fetch(:"entity types", []),
-          "relation types": params.fetch(:"relation types", []),
-          "attribute types": params.fetch(:"attribute types", []),
-          "delimiter characters": params.fetch(:"delimiter characters", []),
-          "non-edge characters": params.fetch(:"non-edge characters", [])
-        }.keep_if{|k, v| v.present?}
-      else
-        nil
-      end
+
+      body_obj.nil? ? nil : JSON.generate(body_obj)
     end
 
     def get_config
