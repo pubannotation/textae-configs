@@ -6,6 +6,7 @@ class Config < ApplicationRecord
 
 	validates_format_of :name, :with => /\A[a-z0-9\-_]+\z/i
 	validates :body, presence: true
+	validates :is_public, boolean: true
 
 	scope :accessibles, -> (current_user) {
 		if current_user.present?
