@@ -3,8 +3,9 @@
 one:
   name: MyString
   description: MyText
-  body: MyText
+  body: '{}'
   is_public: false
+  user_id: 1
 
 two:
   name: test-config-1
