@@ -97,6 +97,10 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (3.1.8)
+    dotenv-rails (3.1.8)
+      dotenv (= 3.1.8)
+      railties (>= 6.1)
     erubi (1.12.0)
     execjs (2.9.1)
     faraday (2.7.12)
@@ -193,6 +197,9 @@ GEM
       omniauth-oauth2 (~> 1.8.0)
     omniauth-oauth2 (1.8.0)
       oauth2 (>= 1.4, < 3)
+      omniauth (~> 2.0)
+    omniauth-rails_csrf_protection (1.0.2)
+      actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
     psych (5.1.2)
@@ -308,6 +315,7 @@ DEPENDENCIES
   byebug
   coffee-rails
   devise
+  dotenv-rails
   font-awesome-rails
   friendly_id
   jbuilder
@@ -316,6 +324,7 @@ DEPENDENCIES
   omniauth
   omniauth-github
   omniauth-google-oauth2
+  omniauth-rails_csrf_protection
   puma
   rack-cors
   rails (~> 7.0.0)
@@ -331,7 +340,7 @@ DEPENDENCIES
   wice_grid!
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 3.2.9p265
 
 BUNDLED WITH
    2.5.1
