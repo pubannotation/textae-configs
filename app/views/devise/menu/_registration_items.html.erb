@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-	Welcome <%= link_to current_user.email, user_path(current_user) %>
+	<%= link_to current_user.email, user_path(current_user), class: 'button' %>
 <% else %>
 	<%= link_to 'signup', new_user_registration_path, class: 'button' %>
 <% end %>
