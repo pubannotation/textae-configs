@@ -3,11 +3,18 @@
 one:
   name: MyString
   description: MyText
-  body: MyText
+  body: '{}'
   is_public: false
+  user_id: 1
 
 two:
-  name: MyString
-  description: MyText
-  body: MyText
-  is_public: false
+  name: test-config-1
+  body: '{}'
+  is_public: true
+  user_id: 1
+
+three:
+  name: test-config-2
+  body: '{}'
+  is_public: true
+  user_id: 2

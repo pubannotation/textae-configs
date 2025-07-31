@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-ruby '3.2.9'
+ruby '3.4.2'
 
-gem 'rails', '~> 7.0.0'
+gem 'rails', '~> 8.0.1'
 gem 'rake'
 
 gem 'puma'
@@ -16,7 +16,12 @@ gem 'sprockets-rails'
 gem 'sqlite3'
 
 gem 'friendly_id'
-gem 'wice_grid', github: 'ledsun/wice_grid', branch: 'rails_7'
+gem 'wice_grid', github: 'yush-nh/wice_grid'
+
+# The csv gem is added because wice_grid currently relies on the standard library version of csv,
+# which will no longer be included as a default gem starting from Ruby 3.4.0.
+# Remove the csv gem from the Gemfile once wice_grid updates to support Ruby 3.4.0 or later.
+gem 'csv'
 gem 'font-awesome-rails'
 
 # Use jquery as the JavaScript library
@@ -39,8 +44,8 @@ gem 'unicorn'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-	# Call 'byebug' anywhere in the code to stop execution and get a debugger console
-	gem 'byebug'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug'
 end
 
 group :development do
