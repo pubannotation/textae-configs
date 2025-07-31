@@ -6,11 +6,7 @@
     List
   </span>
   <%=
-    if current_user
-      link_to 'create', new_config_path, class: 'button'
-    else
-      link_to 'login for creation', new_user_session_path, class: 'button'
-    end
+    link_to 'create', new_config_path, class: 'button'
   %>
 </h1>
 
