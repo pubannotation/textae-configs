@@ -9,6 +9,8 @@ body {
 	margin: 0 auto;
 	max-width: 1000px;
 	border: 2px solid #8d7;
+	border-radius: 5px;
+
 	background-color: #fafffa
 }
 
@@ -37,6 +39,7 @@ body {
 
 #header {
 	position: relative;
+	border-radius: 5px 5px 0 0;
 
 	.title {
 		margin: 10px 0;
@@ -62,6 +65,7 @@ body {
 
 #footer {
 	margin: 10px 0 0 0;
+	border-radius: 0 0 5px 5px;
 	font-style: italic;
 }
 
