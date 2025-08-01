@@ -16,6 +16,16 @@
     table-layout:fixed;
     width: 100%;
 
+    a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 8px;
+      margin: -8px;
+      text-decoration: none;
+      color: inherit;
+    }
+
     .column-config-name {
       width: 10em;
     }
@@ -31,6 +41,25 @@
     .column-date {
       width: 12em;
     }
+
+    tbody tr:nth-child(even) {
+      background-color: #f2f3f5;
+    }
+
+    tbody tr:hover {
+      background-color: #e3f2fd;
+    }
+
+    .column-config-name a {
+      text-align: center;
+    }
+
+    .column-config-description a {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
   }
 }
 
